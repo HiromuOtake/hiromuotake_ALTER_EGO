@@ -13,9 +13,10 @@
 // 頂点フォーマット
 struct VTX_2D
 {
-	D3DXVECTOR3 pos;    // 座標
-	D3DXCOLOR col;		// 色
-	D3DXVECTOR2 tex;    // テクスチャ座標
+	D3DXVECTOR3 pos; // 座標
+	float rhw;       // 投影座標変換
+	float tu, tv;    // テクスチャ座標
+	float color;     // 透明度または色
 };
 
 #define FVF_VTX_2D (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
@@ -29,6 +30,7 @@ public:
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
+	static void DrawTexture(int textureID, D3DXVECTOR2 position, D3DXVECTOR2 scale = { 1.0f, 1.0f }, float alpha = 1.0f);
 	static CBg* Create(CScene::MODE mode);
 	void SetDeath()override;
 private:

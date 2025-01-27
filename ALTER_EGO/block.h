@@ -45,8 +45,6 @@ public:
 	const std::string& GetPairKey() const { return m_pairKey; }
 	static CBlock* Create(D3DXVECTOR3 pos, BLOCK nType);
 	void Draw()override;
-	void PressRedButton();
-	void PressBlueButton();
 	ButtonState GetCurrentState() const { return currentButtonState; }
 	void SetDeath()override;
 	BLOCK m_BlockType;
@@ -96,9 +94,9 @@ public:
 	void Draw()override;
 	static CBlockButton* Create(D3DXVECTOR3 pos, BLOCK nType, BUTTON_COLOR color = BUTTON_NORMAL);
 	void SetColor(BUTTON_COLOR color) { m_Color = color; }
+	void ResetMaterial();
 	BUTTON_COLOR GetColor() const { return m_Color; }	// ボタンの色を取得
 	void SetDeath()override;
-	void OnPressed();
 	bool& GetOpenDoor(); // 扉を開く状態を取得
 	static BUTTON_COLOR m_LastPressedButton;
 private:
@@ -109,6 +107,8 @@ private:
 	bool m_bResetPending;  // ボタンがリセットを待っている状態かどうか
 	bool m_bPressedOnce;
 	BUTTON_COLOR m_Color;  // スイッチの色
+	D3DMATERIAL9 m_OriginalMaterial;
+	D3DMATERIAL9 m_Material;
 	bool IsCollisionPlayer(CPlayer* player);
 	bool IsCollisionClone(CClone* clone);
 	void SetMatColor(D3DMATERIAL9* pMat, int nMatIdx) override;
@@ -166,7 +166,6 @@ public:
 	DOOR_COLOR GetColor() const { return m_Color; }
 	bool IsOpen() const { return m_bOpen; }
 	void OpenAndClose(bool open);			// 扉を開閉する処理
-	void Open();
 	void SetDeath()override;
 private:
 	int m_nModelIdx;

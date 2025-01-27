@@ -33,7 +33,7 @@ HRESULT CCharacter::Init()
 {
 	m_pMotion = MOTION_NONE;
 
-	FILE* pFile = fopen("data\\motion.txt", "r");
+	FILE* pFile = fopen("data\\Motion\\motion.txt", "r");
 
 	int nCnt = 0;
 
@@ -226,7 +226,7 @@ char* CCharacter::GetFileName()
 //=====================================
 void CCharacter::LoadMotion(int* nCntMotion)
 {
-	FILE* pFile = fopen("data\\motion.txt", "r");
+	FILE* pFile = fopen("data\\Motion\\motion.txt", "r");
 
 	if (pFile == NULL)
 	{

@@ -54,7 +54,7 @@ private:
 	{
 		{"data/BGM/ネオン.wav", -1,1.5f} ,			// BGM1
 		{"data/BGM/Vivid_Spooky.wav", -1,0.5f},		// BGM0
-		{"data/SE/jump.wav", 0,1.0f},				// ジャンプ音
+		{"data/SE/jump.wav", 0,0.7f},				// ジャンプ音
 		{"data/SE/get000.wav", 0,0.9f},				// コイン音
 		{"data/SE/death.wav", 0,1.0f},				// 死亡音
 		{"data/SE/goal.wav", 0,2.0f},				// ゴール音

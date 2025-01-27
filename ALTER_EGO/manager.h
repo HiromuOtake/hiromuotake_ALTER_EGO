@@ -38,11 +38,14 @@ public:
 	static CSound* GetSound() { return m_pSound; }										// サウンドの取得
 	static CParticleManager* GetParticleManager() { return m_pParticleManager; }		// パーティクルマネージャーの取得
 	static int& GetMode() { return m_nMode; }											// モードの取得
-	//static CFade* GetFade();
+	static void SetNextStage(const char* stageFile) { m_nextStageFile = stageFile; }
+	static const char* GetNextStage() { return m_nextStageFile.c_str(); }
+	static void SetNextScene(CScene::MODE nextScene) { m_nextSceneMode = nextScene; }
+	static CScene::MODE GetNextScene() { return m_nextSceneMode; }
 	static void SetMode(CScene::MODE mode);
 	static void SetPaused(bool paused) { m_bPaused = paused; }
 	static bool IsPaused() { return m_bPaused; }
-	float GetDeltaTime() const { return m_deltaTime; }
+	//static CFade* GetFade();
 private:
 	static CRenderer* m_pRnderer;					// レンダラー情報
 	static CInputKeyboard* m_pKeyboard;				// キーボード情報
@@ -54,9 +57,8 @@ private:
 	static CSound* m_pSound;						// サウンド情報
 	static CParticleManager* m_pParticleManager;	// パーティクルマネージャー情報
 	static int m_nMode;								// 画面遷移を管理する静的メンバ
-	LARGE_INTEGER m_frequency;						// パフォーマンス周波数
-	LARGE_INTEGER m_prevTime;						// 前回のフレーム時間
-	float m_deltaTime;								// フレーム間の経過時間
+	static std::string m_nextStageFile;				// 次のステージファイル名
+	static CScene::MODE m_nextSceneMode;			// 次のシーンモード
 	static bool m_bPaused;							// ポーズ状態を管理する静的メンバ
 	//static CFade* m_pFade;
 };

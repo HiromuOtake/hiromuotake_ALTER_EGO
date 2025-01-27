@@ -32,7 +32,7 @@ HRESULT CBg::Init()
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderere()->GetDevice();;		//デバイスへのポインタ
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4,
+	pDevice->CreateVertexBuffer(sizeof(VTX_2D) * 4,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_2D,
 		D3DPOOL_MANAGED,
@@ -101,6 +101,59 @@ void CBg::Draw()
 	CObject2D::Draw();
 }
 
+void CBg::DrawTexture(int textureID, D3DXVECTOR2 position, D3DXVECTOR2 scale, float alpha)
+{
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderere()->GetDevice();
+	if (!pDevice) return;
+
+	// テクスチャのアドレスを取得
+	LPDIRECT3DTEXTURE9 pTexture = CManager::GetTexture()->GetAddress(textureID);
+	if (!pTexture) return;
+
+	// テクスチャの幅と高さを取得
+	D3DSURFACE_DESC desc;
+	if (FAILED(pTexture->GetLevelDesc(0, &desc))) return;
+	float texWidth = static_cast<float>(desc.Width);
+	float texHeight = static_cast<float>(desc.Height);
+
+	// 頂点データの設定
+	VTX_2D vertices[4];
+	float width = texWidth * scale.x;
+	float height = texHeight * scale.y;
+
+	vertices[0] = { { position.x, position.y, 0.0f }, 1.0f, 0.0f, 0.0f, alpha };
+	vertices[1] = { { position.x + width, position.y, 0.0f }, 1.0f, 1.0f, 0.0f, alpha };
+	vertices[2] = { { position.x, position.y + height, 0.0f }, 1.0f, 0.0f, 1.0f, alpha };
+	vertices[3] = { { position.x + width, position.y + height, 0.0f }, 1.0f, 1.0f, 1.0f, alpha };
+
+	LPDIRECT3DVERTEXBUFFER9 pVtxBuff;
+	pDevice->CreateVertexBuffer(sizeof(vertices), 0, FVF_VERTEX_2D, D3DPOOL_MANAGED, &pVtxBuff, NULL);
+	void* pVertices;
+	pVtxBuff->Lock(0, sizeof(vertices), &pVertices, 0);
+	memcpy(pVertices, vertices, sizeof(vertices));
+	pVtxBuff->Unlock();
+
+	// 投影行列設定
+	D3DXMATRIX matOrtho;
+	D3DXMatrixOrthoLH(&matOrtho, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 1.0f);
+	pDevice->SetTransform(D3DTS_PROJECTION, &matOrtho);
+
+	D3DXMATRIX matView;
+	D3DXMatrixIdentity(&matView);
+	pDevice->SetTransform(D3DTS_VIEW, &matView);
+
+	// 描画設定
+	pDevice->SetStreamSource(0, pVtxBuff, 0, sizeof(VTX_2D));
+	pDevice->SetFVF(FVF_VERTEX_2D);
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	pDevice->SetTexture(0, pTexture);
+	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+
+	// 描画後の設定復元
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	pVtxBuff->Release(); // 頂点バッファを解放
+}
+
 //=====================================================
 // 背景の生成
 //=====================================================
@@ -115,11 +168,23 @@ CBg* CBg::Create(CScene::MODE mode)
 		switch (mode)
 		{
 		case CScene::MODE::MODE_TITLE:
-			nId = CManager::GetTexture()->Regist("data\\Texture\\title.png");
+			nId = CManager::GetTexture()->Regist("data\\Texture\\titlelogo.png");
+			break;
+
+		case CScene::MODE::MODE_STAGESELECT:
+			nId = CManager::GetTexture()->Regist("data\\Texture\\selectstageBG.png");
+			break;
+
+		case CScene::MODE::MODE_TUTORIAL1:
+			nId = CManager::GetTexture()->Regist("data\\Texture\\tutorial01.png");
+			break;
+
+		case CScene::MODE::MODE_TUTORIAL2:
+			nId = CManager::GetTexture()->Regist("data\\Texture\\tutorial02.png");
 			break;
 
 		case CScene::MODE::MODE_GAME:
-			nId = CManager::GetTexture()->Regist("data\\Texture\\game.png");
+			nId = CManager::GetTexture()->Regist("data\\Texture\\game001.png");
 			break;
 
 		case CScene::MODE::MODE_RESULT:

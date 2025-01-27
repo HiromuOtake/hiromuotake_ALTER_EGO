@@ -29,10 +29,14 @@ public:
 	void Update()override;
 	void Draw()override;
 	void PlayerMovement();
+	void GenerateClone();									// クローン生成処理
+	void HandleCloneSelection();							// クローン選択処理
+	void TitlePlayerMovement();								// タイトルでのプレイヤー処理
 	bool CollisionUPDOWN(bool& bIsLanding, CObject* pObj);	// 当たり判定上下
 	void CollisionLEFTRIGHT(CObject* pObj);					// 当たり判定左右
 	static bool& GetGoal();									// ゴール情報の取得
 	static CPlayer* Create(D3DXVECTOR3 pos);				// プレイヤーの生成
+	void SetDeath()override;
 	static const int m_PLAYER_LIFE = 1;						// プレイヤーの体力
 	static const int m_DEATH_COUNT = 30;					// プレイヤーが復活するまでの時間
 	static const int m_RESET_PLAYER_POS_X = 200;			// プレイヤーを復活させる場所(X座標)
@@ -44,9 +48,6 @@ public:
 	static constexpr float m_PLAYER_SPEED = 1.0f;			// プレイヤーのスピード
 	static constexpr float m_GOAL_CORRECTION = 50.0f;		// ゴールの判定の補正
 	static constexpr float m_LEFTRIGHT = 0.5f;
-	void GenerateClone();
-	void HandleCloneSelection();
-	void SetDeath()override;
 private:
 	D3DXVECTOR3 m_move;
 	D3DXVECTOR3 m_max;
@@ -59,11 +60,13 @@ private:
 	static bool m_bUse;
 	static bool m_bhalfwaypoint;
 	int m_nTextureIdx;
-	int m_JumpCnt;
+	int m_nJumpCnt;
 	int m_nModelIdx;
 	int m_nLife;
 	int m_nType;
 	int m_nDeathTimer;
+	int m_nRandomAction; // 0: 走るのみ, 1: 走りながらジャンプ
+	int m_nTitleJump;
 	CCloneCircle* m_pCloneCircle;  // CloneCircle のインスタンス
 	CInputKeyboard* m_Keyboard;
 	CInputJoyPad* m_JoyPad;

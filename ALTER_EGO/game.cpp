@@ -64,11 +64,9 @@ HRESULT CGame::Init()
 
 	pSound->PlaySound(CSound::SOUND_LABEL::SOUND_LABEL_BGM001);
 
-	//CScene* pScene = CManager::GetScene();
+	std::string filename = CManager::GetNextStage();
 
-	std::string filename;
-
-	filename = "data\\SetStage002.txt";
+	//filename = "data\\Stage\\SetStage002.txt";
 
 	std::ifstream ifs(filename);
 	if (!ifs)
@@ -110,7 +108,8 @@ HRESULT CGame::Init()
 				CreateObject(type, key, D3DXVECTOR3(x * BLOCK_WIDTH, -y * BLOCK_HEIGHT, 0.0f), rotation);
 			}
 			x++;
-		}	x = 0;
+		}
+		x = 0;
 		y++;
 	}
 	return S_OK;
@@ -176,54 +175,59 @@ void CGame::Draw()
 //======================================================
 void CGame::CreateObject(int type, const std::string& key, D3DXVECTOR3 position, float rotation)
 {
-	CBlock* pObj = nullptr;
+	CBlock* pObj_Block = nullptr;
+	CItem* pObj_Itenm = nullptr;
 
 	switch (type)
 	{
-	case 1:  // 通常ブロック
-		pObj = CBlock::Create(position, CBlock::BLOCK::BLOCK_NORMAL);
+	case 1:		// 通常ブロック
+		pObj_Block = CBlock::Create(position, CBlock::BLOCK::BLOCK_NORMAL);
 		break;
 
-	case 2:
-		pObj = CBlockNeedle::Create(position, CBlock::BLOCK::BLOCK_NEEDLE);
+	case 2:		// トゲ(未実装)
+		pObj_Block = CBlockNeedle::Create(position, CBlock::BLOCK::BLOCK_NEEDLE);
 		break;
 
-	case 4:  // ドア
+	case 4:		// ドア
 		if (key == "R")
-			pObj = CBlockRedDoor::Create(position, CBlockRedDoor::DOOR_RED);
+			pObj_Block = CBlockRedDoor::Create(position, CBlockRedDoor::DOOR_RED);
 		else if (key == "B")
-			pObj = CBlockBlueDoor::Create(position, CBlockBlueDoor::DOOR_BLUE);
+			pObj_Block = CBlockBlueDoor::Create(position, CBlockBlueDoor::DOOR_BLUE);
 		else
-			pObj = CBlockDoor::Create(position, CBlock::BLOCK::BLOCK_DOOR,CBlockDoor::DOOR_NORMAL);
+			pObj_Block = CBlockDoor::Create(position, CBlock::BLOCK::BLOCK_DOOR,CBlockDoor::DOOR_NORMAL);
 		break;
 
-	case 5:  // ボタン
+	case 5:		// ボタン
 		if (key == "R")
-			pObj = CBlockRedButton::Create(position, CBlockRedButton::BUTTON_RED);
+			pObj_Block = CBlockRedButton::Create(position, CBlockRedButton::BUTTON_RED);
 		else if (key == "B")
-			pObj = CBlockBlueButton::Create(position,CBlockBlueButton::BUTTON_BLUE);
+			pObj_Block = CBlockBlueButton::Create(position,CBlockBlueButton::BUTTON_BLUE);
 		else
-			pObj = CBlockButton::Create(position, CBlock::BLOCK::BLOCK_BUTTON);
+			pObj_Block = CBlockButton::Create(position, CBlock::BLOCK::BLOCK_BUTTON);
 		break;
 
-	case 99:  // ゴール
-		pObj = CBlockGoal::Create(position, CBlock::BLOCK::BLOCK_GOAL);
+	case 11:	// アイテム
+		pObj_Itenm = CItem::Create(position, CItem::ITEM::ITEM_STAR);
+		break;
+
+	case 99:	// ゴール
+		pObj_Block = CBlockGoal::Create(position, CBlock::BLOCK::BLOCK_GOAL);
 		break;
 
 	default:
 		break;
 	}
 
-	if (pObj)
+	if (pObj_Block)
 	{
-		pObj->SetPairKey(key.c_str());
+		pObj_Block->SetPairKey(key.c_str());
 
-		pObj->SetRotation(rotation);
+		pObj_Block->SetRotation(rotation);
 
 		if (key != "none")
 		{
 			// ペアを登録
-			CObject::GetPair()[key].push_back(pObj);
+			CObject::GetPair()[key].push_back(pObj_Block);
 		}
 	}
 }

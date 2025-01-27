@@ -56,7 +56,7 @@ public:
 	std::vector<CObject*>& GetPairObjects(const std::string& key);
 	std::vector<CObject*> GetAllObjects();
 	CObject* FindFirstOfType(TYPE type);
-
+	
 protected:
 	void Release();												// ©•ª©g‚Ì‰ğ•ú
 private:

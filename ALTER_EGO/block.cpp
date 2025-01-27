@@ -175,7 +175,7 @@ HRESULT CBlock::Init()
 	CModel* pModel = CManager::GetModel();
 
 	m_nModelIdx = pModel->Regist("data\\MODEL\\x\\neonblock.x");
-	m_nTexIdx = CManager::GetTexture()->Regist("data\\Texture\\neonblock.png");
+	m_nTexIdx = CManager::GetTexture()->Regist("data\\Texture\\neonblock001.png");
 
 	CObjectX::BindModel(pModel->GetBuffMat(m_nModelIdx),
 		pModel->GetNumMat(m_nModelIdx),
@@ -231,7 +231,8 @@ HRESULT CBlockButton::Init()
 
 	m_bOpen = false;				// ‰Šúó‘Ô‚Í•Â‚¶‚½ó‘Ô
 	m_bColliderActive = true;		// ‰Šúó‘Ô‚Í“–‚½‚è”»’è‚ğ—LŒø‚É‚·‚é
-
+	m_bResetPending = false;
+	m_LastPressedButton = BUTTON_NORMAL;
 	CObjectX::Init();
 
 	return S_OK;

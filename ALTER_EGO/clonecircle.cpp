@@ -107,7 +107,6 @@ void CCloneCircle::Draw()
 
     // Zバッファを一時的に無効化
     pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
-
     pDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 
     if (CManager::IsPaused())

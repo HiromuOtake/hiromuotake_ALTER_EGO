@@ -7,9 +7,11 @@
 
 #include "scene.h"
 #include "title.h"
+#include "stageselect.h"
+#include "tutorial.h"
+#include "tutorial2.h"
 #include "game.h"
 #include "result.h"
-#include "Tutorial.h"
 
 //======================================================
 // コンストラクタ
@@ -74,9 +76,17 @@ CScene* CScene::Create(MODE mode)
 			pScene = new CTitle;
 			break;
 
-		//case MODE_TUTORIAL:
-		//	pScene = new CTutorial;
-		//	break;
+		case MODE_STAGESELECT:
+			pScene = new CStageSelect;
+			break;
+
+		case MODE_TUTORIAL1:
+			pScene = new CTutorial;
+			break;
+
+		case MODE_TUTORIAL2:
+			pScene = new CTutorial2;
+			break;
 
 		case MODE_GAME:
 			pScene = new CGame;

@@ -21,6 +21,8 @@ CScene* CManager::m_pScene = nullptr;
 CSound* CManager::m_pSound = nullptr;
 CParticleManager* CManager::m_pParticleManager = nullptr;
 int CManager::m_nMode = 0;
+std::string CManager::m_nextStageFile = "";
+CScene::MODE CManager::m_nextSceneMode = CScene::MODE_TITLE;
 bool CManager::m_bPaused = false;
 //CFade* CManager::m_pFade = nullptr;
 
@@ -219,6 +221,10 @@ void CManager::Draw()
 	if (m_pRnderer != nullptr)
 	{
 		m_pRnderer->Draw();
+	}
+	if (m_pScene != nullptr)
+	{
+		m_pScene->Draw();
 	}
 	if (m_pParticleManager != nullptr)
 	{

@@ -33,6 +33,8 @@ public:
 	void SetWidthHeight(float fWidth, float fHeight);
 	void SetColor(float fColor);
 	void SetTexture(float fTexture);
+	static CObject2D* Create(LPDIRECT3DTEXTURE9 pTex, D3DXVECTOR3 pos, float fWidth, float fHeight, float fTexture, float fColor);
+	void SetDeath()override;
 	D3DXVECTOR3& GetPos();
 	D3DXVECTOR3* GetPosOld();
 	D3DXVECTOR3* GetRot();

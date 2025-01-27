@@ -86,6 +86,40 @@ void CCamera::Update()
 	{
 
 	}
+
+	////ƒJƒƒ‰ˆÚ“®
+	//if (m_Keyboard->GetPress(DIK_W) == true)
+	//{
+	//	m_posR.z += cosf(m_rot.y) * 2;
+	//	m_posR.x += sinf(m_rot.y) * 2;
+	//	
+	//	m_posV.x = m_posR.x + sinf(m_rot.y + D3DX_PI) * 600.0f;
+	//	m_posV.z = m_posR.z + cosf(m_rot.y + D3DX_PI) * 600.0f;
+	//}
+	//if (m_Keyboard->GetPress(DIK_S) == true)
+	//{
+	//	m_posR.z += cosf(m_rot.y - D3DX_PI) * 2;
+	//	m_posR.x += sinf(m_rot.y - D3DX_PI) * 2;
+
+	//	m_posV.x = m_posR.x + sinf(m_rot.y + D3DX_PI) * 600.0f;
+	//	m_posV.z = m_posR.z + cosf(m_rot.y + D3DX_PI) * 600.0f;
+	//}
+	//if (m_Keyboard->GetPress(DIK_A) == true)
+	//{
+	//	m_posR.z -= cosf(m_rot.y + 1.57f) * 2;
+	//	m_posR.x -= sinf(m_rot.y + 1.57f) * 2;
+
+	//	m_posV.x = m_posR.x + sinf(m_rot.y + D3DX_PI) * 600.0f;
+	//	m_posV.z = m_posR.z + cosf(m_rot.y + D3DX_PI) * 600.0f;
+	//}
+	//if (m_Keyboard->GetPress(DIK_D) == true)
+	//{
+	//	m_posR.z -= cosf(m_rot.y - 1.57f) * 2;
+	//	m_posR.x -= sinf(m_rot.y - 1.57f) * 2;
+	//	
+	//	m_posV.x = m_posR.x + sinf(m_rot.y + D3DX_PI) * 600.0f;
+	//	m_posV.z = m_posR.z + cosf(m_rot.y + D3DX_PI) * 600.0f;
+	//}
 }
 
 //===============================
